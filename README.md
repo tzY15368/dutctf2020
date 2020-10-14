@@ -3,8 +3,8 @@ dutctf2020 source code
 * 
 ## notes
 The challenges in this repo are real simple, with the goal of popularizing information security knowledge.
-- [web1](#web-tutorial)
-- [web2](#web1)
+- [web-tutorial](#web-tutorial)
+- [web1](#web1)
 - [web2](#web2)
 - [vol_time_1](#vol_time_1)
 - [vol_time_2](#vol_time_2)
