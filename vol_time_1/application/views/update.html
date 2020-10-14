@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/vol_time/static/layui-v2.5.4/layui/css/layui.css" />
+        <script src="/vol_time/static/layui-v2.5.4/layui/layui.js"></script>
+        <style>
+            .container{
+                text-align: center;
+                margin:30px 0;
+            }
+            .container p{
+                margin: 35px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="/vol_time/index.php/Vol/upload" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <!--
+            <input type="file" name="data" accept="" />
+            <input type="submit" value="提交" />-->
+            <div class="layui-upload container">
+                <button type="button" class="layui-btn layui-btn-normal" id="fileBtn">选择文件</button>
+                <button type="button" class="layui-btn" id="submitBtn">开始上传</button>
+                <p id="res-info"></p>
+            </div>
+        </form>
+        <script>
+            layui.use('upload', function(){
+                var upload = layui.upload;
+                upload.render({
+                    elem: '#fileBtn'
+                    ,url: '/vol_time/index.php/Vol/upload'
+                    ,auto: false
+                    ,accept:'file'
+                    ,field:'data'
+                    ,bindAction: '#submitBtn'
+                    ,before:function (obj) {
+                        layer.load();
+                    }
+                    ,done: function(res,index,upload){
+                        console.log("上传成功 code:"+res.code);
+                        layer.closeAll('loading');
+                        //alert(res.data);
+                        document.getElementById("res-info").innerHTML= res.data;
+                    }
+                    ,error:function(){
+                        layer.closeAll('loading');
+                        console.log("上传失败");
+                    }
+                });
+            })
+        </script>
+    </body>
+</html>

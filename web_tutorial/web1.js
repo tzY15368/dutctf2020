@@ -1,0 +1,1 @@
+$("#button1").click(()=>{document.getElementById("ans").innerText+="dutctf{rigged_dom_elements}"})
