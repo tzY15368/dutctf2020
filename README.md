@@ -181,12 +181,6 @@ img_b64 = json.loads(r.text).get('cpt')
 print(len(img_b64))
 print(json.loads(r.text).get('msg'))
 exit()
-
-
-print(text)
-print(time.time()-t1)
-r = requests.post('http://10.7.20.225/web5/captcha',data=json.dumps({'captcha':text}),headers={"Cookie":cookie})
-print(r.text)
 ```
 ### 方法2
 晚点放
