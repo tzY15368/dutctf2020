@@ -183,9 +183,9 @@ print(json.loads(r.text).get('msg'))
 exit()
 ```
 ### 方法2
-本题中的验证码信息用了客户端session存储，这是个严重的安全隐患，见这两篇文章
--- [1](https://xz.aliyun.com/t/3569)  
--- [2](https://www.leavesongs.com/PENETRATION/client-session-security.html)
+本题中的验证码信息用了客户端session存储，这是个严重的安全隐患，见这两篇文章  
+- [1](https://xz.aliyun.com/t/3569)  
+- [2](https://www.leavesongs.com/PENETRATION/client-session-security.html)
 对cookie中的session字符串运行解密脚本
 ```
 import sys
@@ -221,7 +221,7 @@ def decryption(payload):
 if __name__ == '__main__':
     print(decryption(sys.argv[1].encode()))
 ```
-发现session中存储了以下信息，`{'captcha': 'hjxcf4', 'created_at': 1602736430.141247}`，故第一种方法是在时间限制内直接提交正确captcha，第二种方法是修改created_at到未来的时间，从而给自己更多的时间用眼睛看出flag，并手动提交。
+发现session中存储了以下信息，`{'captcha': 'hjxcf4', 'created_at': 1602736430.141247}`，故第一种方法是拿到解密后的正确验证码值后重新加密并在时间限制内直接提交正确captcha，第二种方法是修改created_at到未来的时间，从而给自己更多的时间用眼睛看出flag，并手动提交。
 
 ### 方法3
 时间限制设置的2秒，因为pytesseract光做ocr就要1.7秒，而你真的很快，在时间限制内提交了正确验证码。
